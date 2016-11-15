@@ -11,9 +11,9 @@
     path{
       stroke: black;
       stroke-width:1;
+      fill:transparent;
       height:100%;
       width:100%;
-      fill: transparent;
     }
     </style>
   </head>
@@ -22,12 +22,9 @@
     <script src='timeline.js'></script>
     <script>
       Timeline('#chart', [
-	{x:0,y:0},
-	{x:1,y:1},
-	{x:2,y:2},
-	{x:3,y:2},
-	{x:4,y:4},
-	{x:5,y:4},
+	...[...Array(15).keys()].map( (_,i) => {
+	  return {x: i, y: Math.random() * 20}
+	})
       ])
     </script>
   </body>

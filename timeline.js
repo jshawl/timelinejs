@@ -10,7 +10,13 @@ Timeline = (function(global){
     path.setAttribute("vector-effect","non-scaling-stroke")
     path.setAttribute("width","100")
     path.setAttribute("height","100")
+    var circle = document.createElementNS('http://www.w3.org/2000/svg',"circle")
+    circle.setAttribute("cx", 2)
+    circle.setAttribute("cy", 2)
+    circle.setAttribute("r", 2)
+    circle.setAttribute("preserveAspectRatio","none")
     svg.appendChild(path)
+    svg.appendChild(circle)
     target.appendChild(svg)
   }
 
@@ -25,9 +31,13 @@ Timeline = (function(global){
     }
   }
 
+  function max(collection, finder){
+    return Math.max(...collection.map( element => finder(element) ))
+  }
+
   function line(points){
-    var scaleX = scale([0,5],[0,100])
-    var scaleY = scale([0,4],[0,100])
+    var scaleX = scale([0,max(points, point => point.x)],[0,100])
+    var scaleY = scale([0,max(points, point => point.y)],[0,100])
     var start = points.shift()
     return `M ${start.x} ${start.y} L ${start.x} ${start.y} ` + points.map( point => {
       return `L ${scaleX(point.x)} ${scaleY(point.y)}`
